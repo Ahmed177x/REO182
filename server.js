@@ -921,9 +921,9 @@ client.on("message", message => {
 
 \`${prefix}kick\` : لطرد شخص من السيرفر
 
-\`${prefix}open\` : لفتح الشات
+\`${prefix}فتح\` : لفتح الشات
 
-\`${prefix}close\` : لقفل الشات 
+\`${prefix}قفل\` : لقفل الشات 
 
 \`${prefix}mute\` : لإسكات شخص
 
