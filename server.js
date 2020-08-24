@@ -576,7 +576,7 @@ client.on("message", message => {
 
 //// كود فتح واغلاق الروم
 client.on("message", message => {
-  if (message.content === prefix + "close") {
+  if (message.content === prefix + "قفل") {
     if (!message.channel.guild)
       return message.reply(" هذا الامر فقط للسيرفرات !!");
 
@@ -590,7 +590,7 @@ client.on("message", message => {
         message.reply("**تم قفل الشات :no_entry: **");
       });
   }
-  if (message.content === prefix + "open") {
+  if (message.content === prefix + "فتح") {
     if (!message.channel.guild)
       return message.reply(" هذا الامر فقط للسيرفرات !!");
 
@@ -769,9 +769,9 @@ client.on("message", message => {
 
 \`${prefix}kick\` : لطرد شخص من السيرفر
 
-\`${prefix}open\` : لفتح الشات
+\`${prefix}فتح\` : لفتح الشات
 
-\`${prefix}close\` : لقفل الشات 
+\`${prefix}قفل\` : لقفل الشات 
 
 \`${prefix}mute\` : لإسكات شخص
 
