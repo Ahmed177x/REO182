@@ -1,3 +1,4 @@
+///
 require("events").EventEmitter.defaultMaxListeners = 200;
 const http = require("http");
 const express = require("express");
@@ -32,10 +33,10 @@ const { get } = require("snekfetch");
 const guild = require("guild");
 const dateFormat = require("dateformat");
 const YouTube = require("simple-youtube-api");
-const youtube = new YouTube("AIzaSyA5mjXFE1kElANUSIuGPQrVz8qRdG6YGt0"); //تعديل اساسي سوي اي بي اي جديد
+const youtube = new YouTube("AIzaSyB6Ulh7QoqVoLGHjj3T2jaJqNtWlyaG3qY"); //تعديل اساسي سوي اي بي اي جديد
 const hastebins = require("hastebin-gen");
 const getYoutubeID = require("get-youtube-id");
-const yt_api_key = "AIzaSyA5mjXFE1kElANUSIuGPQrVz8qRdG6YGt0"; ///تعديل اساسي سوي اي بي اي جديد
+const yt_api_key = "AIzaSyB6Ulh7QoqVoLGHjj3T2jaJqNtWlyaG3qY"; ///تعديل اساسي سوي اي بي اي جديد
 const pretty = require("pretty-ms");
 client.login(process.env.TOKEN);
 const queue = new Map();
@@ -76,7 +77,7 @@ client.on("message", message => {
 
 ////كود تيكت
 client.on("message", message => {
-  if (message.content.startsWith(prefix + "new")) {
+  if (message.content.startsWith(prefix + "تكت")) {
     const reason = message.content
       .split(" ")
       .slice(1)
@@ -122,20 +123,20 @@ client.on("message", message => {
         });
       })
       .catch(console.error);
-  } else if (message.content.startsWith(prefix + "closet")) {
+  } else if (message.content.startsWith(prefix + "حذف تكت")) {
     if (!message.guild.roles.exists(gg => gg.name === "Support Team"))
       return message.channel.send(` لازم تسوي رتبة اسمها \`Support Team\`.`);
     if (!message.channel.name.startsWith("ticket-"))
-      return message.channel.send("هذه الروم غير مخصص للتذاكر");
+      return message.channel.send("This isn't a ticket channel!");
     if (
       !message.member.roles.has(
         message.guild.roles.filter(r => r.name === "Support Team").first().id
       )
     )
-      return message.channel.send("ليس لديك رتبة Support Team");
+      return message.channel.send("You don't have the `Support Team` role!");
     message.channel
       .delete()
-      .catch(e => message.channel.send("تأكد من صلاحياتي!"));
+      .catch(e => message.channel.send("Check my permissions!"));
   }
 });
 
@@ -200,7 +201,7 @@ client.on("message", pixelbot => {
           moment(pixelbot.author.createdAt).format("D/M/YYYY h:mm a "),
           true
         )
-        .addField("**✽ جميع الانفايتات :**    ", inviteCount, true)
+        .addField("**✽ Total invites :**    ", inviteCount, true)
         .setTimestamp(); // itzZa1D - Codes Team.
 
       pixelbot.channel.sendEmbed(pixeluser).then(c => {}); // itzZa1D - Codes Team.
@@ -223,7 +224,7 @@ client.on("message", message => {
       .addField("**Channels** : ", `» ${client.channels.size} `, true)
       .addField("**Users** : ", `» ${client.users.size} `, true)
       .addField("**Bot Name** :  ", `» ${client.user.tag} `, true)
-      .addField("**Bot Owner** :  ", `» <@722915852344885299>`, true) // تعديل اساسي غير الايدي لايدي حسابك
+      .addField("**Bot Owner** :  ", `» <@484277993397551135>`, true) // تعديل اساسي غير الايدي لايدي حسابك
       .setImage("")
       .setFooter(message.author.username, message.client.avatarURL);
     message.channel.send(bot);
@@ -239,7 +240,7 @@ client.on("message", message => {
 
   let args = message.content.split(" ").slice(1);
 
-  if (command == "ban") {
+  if (command == "باند") {
     if (message.author.bot) return;
     if (!message.channel.guild)
       return message.reply("** This command only for servers**");
@@ -269,7 +270,7 @@ client.on("message", message => {
   }
 });
 client.on("message", async message => {
-  if (message.content.startsWith(prefix + "inf")) {
+  if (message.content.startsWith(prefix + "انفايت")) {
     //// وهون الامر طبعا
     let oi = message.mentions.users.first()
       ? message.mentions.users.first().id
@@ -341,15 +342,15 @@ client.on("message", message => {
 
   let args = message.content.split(" ").slice(1);
 
-  if (command == "kick") {
+  if (command == "طرد") {
     if (message.author.bot) return;
     if (!message.channel.guild)
       return message.reply("** This command only for servers**");
 
     if (!message.guild.member(message.author).hasPermission("KICK_MEMBERS"))
-      return message.reply("**`ليس لدي صلاحية ` طرد لاعب**");
+      return message.reply("**You Don't Have ` KICK_MEMBERS ` Permission**");
     if (!message.guild.member(client.user).hasPermission("KICK_MEMBERS"))
-      return message.reply("**`ليس لديك صلاحية ` باند لاعب**");
+      return message.reply("**I Don't Have ` KICK_MEMBERS ` Permission**");
     let user = message.mentions.users.first();
     let reason = message.content
       .split(" ")
@@ -407,7 +408,7 @@ const invites = {}; // Codes
 
 ////كود معلومات السيرفر
 client.on("message", message => {
-  if (message.content.startsWith(prefix + "server")) {
+  if (message.content.startsWith(prefix + "السيرفر")) {
     if (!message.channel.guild)
       return message.channel.send(` | This Command is used only in servers!`);
     const millis = new Date().getTime() - message.guild.createdAt.getTime();
@@ -418,11 +419,11 @@ client.on("message", message => {
       .setAuthor(message.guild.name, message.guild.iconURL)
       .addField(":id:✽** Server ID:**", `» ${message.guild.id} `, true)
       .addField(
-        ":calendar:✽** تم إنشاؤه في**",
+        ":calendar:✽** Created On**",
         `» ${message.guild.createdAt.toLocaleString()}`,
         true
       )
-      .addField(":crown: ✽**مالك السيرفؤ**", `**${message.guild.owner}**`, true)
+      .addField(":crown: ✽**Server Owner**", `**${message.guild.owner}**`, true)
       .addField(
         `✽** Members ** [${message.guild.members.size}]`,
         `**${
@@ -432,13 +433,13 @@ client.on("message", message => {
         true
       )
       .addField(
-        ":speech_balloon:✽** القنوات **",
+        ":speech_balloon:✽** Channels **",
         `» **${message.guild.channels.filter(m => m.type === "text").size}**` +
           " TexT | VoicE  " +
           `**${message.guild.channels.filter(m => m.type === "voice").size}** `,
         true
       )
-      .addField(":earth_africa:✽** منطقة **", ` ${message.guild.region}`, true)
+      .addField(":earth_africa:✽** Region **", ` ${message.guild.region}`, true)
       .setImage("")
 
       .setColor("#000000");
@@ -451,7 +452,7 @@ client.on("message", message => {
 
   let command = message.content.split(" ")[0];
 
-  if (command === prefix + "unmute") {
+  if (command === prefix + "اسكات") {
     if (message.author.bot) return;
     if (!message.member.hasPermission("MANAGE_ROLES"))
       return message
@@ -515,7 +516,7 @@ client.on("message", message => {
 
   let command = message.content.split(" ")[0];
 
-  if (command === prefix + "mute") {
+  if (command === prefix + "تكلم") {
     if (message.author.bot) return;
     if (!message.member.hasPermission("MANAGE_ROLES"))
       return message
@@ -576,7 +577,7 @@ client.on("message", message => {
 
 //// كود فتح واغلاق الروم
 client.on("message", message => {
-  if (message.content === prefix + "close") {
+  if (message.content === prefix + "قفل") {
     if (!message.channel.guild)
       return message.reply(" هذا الامر فقط للسيرفرات !!");
 
@@ -590,7 +591,7 @@ client.on("message", message => {
         message.reply("**تم قفل الشات :no_entry: **");
       });
   }
-  if (message.content === prefix + "open") {
+  if (message.content === prefix + "افتح") {
     if (!message.channel.guild)
       return message.reply(" هذا الامر فقط للسيرفرات !!");
 
@@ -633,7 +634,7 @@ client.on("messageCreate", async message => {
 //// كود سحب شخص
 client.on("message", message => {
   if (!message.channel.guild) return;
-  if (message.content.startsWith(prefix + "move")) {
+  if (message.content.startsWith(prefix + "سحب")) {
     if (message.member.hasPermission("MOVE_MEMBERS")) {
       if (message.mentions.users.size === 0) {
         return message.channel.send("``Use : " + prefix + "move @User``");
@@ -643,7 +644,7 @@ client.on("message", message => {
           var authorchannel = message.member.voiceChannelID;
           var usermentioned = message.mentions.members.first().id;
           var embed = new Discord.RichEmbed()
-            .setTitle("بنجاح!")
+            .setTitle("Succes!")
             .setColor("#000000")
             .setDescription(
               `✅ You Have Moved <@${usermentioned}> To Your Channel `
@@ -663,14 +664,14 @@ client.on("message", message => {
           message.guild.members.get(usermentioned).send(embed);
         } else {
           message.channel.send(
-            "`لا يمكنك التحرك" +
+            "`You Cant Move" +
               message.mentions.members.first() +
-              " `هذا العضو يجب ان يكون في روم صوتي`"
+              " `The User Should Be In channel To Move It`"
           );
         }
       } else {
         message.channel.send(
-          "**``يجب ان تكون روم صوتي لسحب لاعب``**"
+          "**``You Should Be In Room Voice To Move SomeOne``**"
         );
       }
     } else {
@@ -688,7 +689,7 @@ client.on("message", function(message) {
 
   var args = message.content.substring(prefix.length).split(" ");
   switch (args[0].toLocaleLowerCase()) {
-    case "clear":
+    case "مسح":
       message.delete();
       if (!message.channel.guild) return;
       if (message.member.hasPermission(0x2000)) {
@@ -726,7 +727,7 @@ client.on("message", function(message) {
         }
       } else {
         var manage = new Discord.RichEmbed()
-          .setDescription("ليس لديك صلاحية MANAGE_MESSAGES :(")
+          .setDescription("You Do Not Have Permission MANAGE_MESSAGES :(")
           .setColor("RANDOM");
         message.channel.sendEmbed(manage);
         return;
@@ -742,80 +743,155 @@ client.on("message", message => {
       message.author
         .send(
           `   
+\`_________________________________________________________________\`
 \`الاوامر العامة\` :postbox:
+
 \`${prefix}bot\` : لعرض معلومات عن البوت 
+\`=================================================================\`
 \`${prefix}user\` : لعرض معلومات عنك 
+\`=================================================================\`
 \`${prefix}avt\` :يعرض لك صورت  اي شخص عن طريق الايدي 
+\`=================================================================\`
 \`${prefix}avatar\` : لعرض صورتك أو صورة الي تمنشنه 
-\`${prefix}color\` : لأختيار لونك في السيرفر 
-\`${prefix}colors\` : غير لونك 
-\`${prefix}inf\` : عدد الدعوات للسيرفر
+\`=================================================================\`
+\`${prefix}لون\` : لأختيار لونك في السيرفر 
+\`=================================================================\`
+\`${prefix}الوان\` : غير لونك 
+\`=================================================================\`
+\`${prefix}انفايت\` : عدد الدعوات للسيرفر
+\`=================================================================\`
 \`${prefix}رابط\` : اكتب رابط بالشات يجيك رابط السيرفر خاص
+\`=================================================================\`
+\`${prefix}السيرفر\` :معلومات السيرفر
+\`=================================================================\`
+\`${prefix}البنق\` : لعرض البنق
+\`=================================================================\`
 
+\`_________________________________________________________________\`
 \`الاوامر الإدارية\` :stars:
-\`${prefix}clear\` : لمسح الشات 
-\`${prefix}ban\` : لحظر شخص من السيرفر
-\`${prefix}kick\` : لطرد شخص من السيرفر
-\`${prefix}open\` : لفتح الشات
-\`${prefix}close\` : لقفل الشات 
-\`${prefix}mute\` : لإسكات شخص
-\`${prefix}unmute\` : لـ فك إسكات شخص
-\`${prefix}new\` : فتح التكت
-\`${prefix}closet\` : لحذف روم التكت
-\`${prefix}say\` : البوت يكرر كلامك
-\`${prefix}move\` : لسحب الشخص الى روومك
-\`${prefix}reply\` : لصنع رد تلقائي
-\`${prefix}setLog\` : لتحديد روم السجلات 
-\`${prefix}setby\` : تحديد روم المغادرة
-\`${prefix}setWelcomer <channel name>\` : لتحديد روم الولكم 
-\`${prefix}setMessage\` : لتحديد رسالة الترحيب 
-\`${prefix}setVc\` <channel name> : لتحديد روم الفويس اونلاين 
-\`${prefix}vc off\` : لإغلاق روم الفويس اونلاين
-\`${prefix}ls\` : لإظهار جميع بوتات السيرفر
-\`${prefix}role\` : لاعطاء شخص رتبة
-\`${prefix}role all\` : لـ إعطاء الجميع رتبة معينة
 
+\`${prefix}مسح\` : لمسح الشات 
+\`==================================================================\`
+\`${prefix}باند\` : لحظر شخص من السيرفر
+\`==================================================================\`
+\`${prefix}طرد\` : لطرد شخص من السيرفر
+\`==================================================================\`
+\`${prefix}افتح\` : لفتح الشات
+\`==================================================================\`
+\`${prefix}قفل\` : لقفل الشات 
+\`==================================================================\`
+\`${prefix}اسكات\` : لإسكات شخص
+\`==================================================================\`
+\`${prefix}تكلم\` : لـ فك إسكات شخص
+\`==================================================================\`
+\`${prefix}تكت\` : فتح التكت
+\`==================================================================\`
+\`${prefix}حذف تكت\` : لحذف روم التكت
+\`==================================================================\`
+\`${prefix}say\` : البوت يكرر كلامك
+\`==================================================================\`
+\`${prefix}سحب\` : لسحب الشخص الى روومك
+\`==================================================================\`
+\`${prefix}الرد\` : لصنع رد تلقائي
+\`==================================================================\`
+\`${prefix}setLog\` : لتحديد روم السجلات 
+\`==================================================================\`
+\`${prefix}setby\` : تحديد روم المغادرة
+\`==================================================================\`
+\`${prefix}setWelcomer <channel name>\` : لتحديد روم الولكم 
+\`==================================================================\`
+\`${prefix}setMessage\` : لتحديد رسالة الترحيب 
+\`==================================================================\`
+\`${prefix}setVc\` <channel name> : لتحديد روم الفويس اونلاين 
+\`==================================================================\`
+\`${prefix}vc off\` : لإغلاق روم الفويس اونلاين
+\`==================================================================\`
+\`${prefix}ls\` : لإظهار جميع بوتات السيرفر
+\`==================================================================\`
+\`${prefix}role\` : لاعطاء شخص رتبة
+\`==================================================================\`
+\`${prefix}role all\` : لـ إعطاء الجميع رتبة معينة
+\`==================================================================\`
+\`${prefix}giveaway\` :قيفوي
+\`==================================================================\`
+
+\`__________________________________________________________________\`
 \`\`اوامر التقديم\`\` :pencil: 
+
 \`${prefix}room1\` : لعمل روم التقديمات
+\`==================================================================\`
 \`${prefix}room2\` : لعمل روم القبول والرفض
+\`==================================================================\`
 \`لقبول تقديم عضو : \`${prefix}قبول
+\`==================================================================\`
 مثال: \`\`${prefix}قبول @منشن عضو \`\`
-لرفض عضو : ${prefix}رفض
+\`==================================================================\`
+لرفض عضو: ${prefix}رفض
+\`==================================================================\`
 مثال: \`\`${prefix}رفض @منشن عضو لست متفاعل بشكل كافِ\`\`
+\`==================================================================\`
 
   `
         )
         .then(() => {
           message.author.send(`
 
+\`__________________________________________________________________\`
 \`أوامر الكريدت\` :credit_card: 
+
 \`${prefix}credits\` : لمعرفة رصيدك  
+\`==================================================================\`
 \`${prefix}daily\` : لأخذ جائزة يومية
+\`==================================================================\`
 \`يمكن التحويل من شخص لشخص + يزيد الكريدت فقط من امر دايلي\`
+\`==================================================================\`
 
+\`__________________________________________________________________\`
 \`أوامر الموسيقى \` :notes:
-\`${prefix}Play\` : تشغيل الاغنية او اضافتها للقائمة او اكمال الاغنية [p]
-\`${prefix}Pause\` : ايقاف مؤقت الاغنية
-\`${prefix}Resume\` : اكمال الاغنية 
-\`${prefix}stop\` : لأيقاف الأغنية وخروج البوت من الروم
-\`${prefix}forceskip\` : لتخطي الأغنية بشكل مباشر
-\`${prefix}Queue\` : عرض القائمة 
-\`${prefix}skipto\` : لتخطي الأغنية الى الأغنية القادمة في طابور الموسيقى القادمة
-\`${prefix}Skip\` : تخطي للاغنية التالية 
-\`${prefix}Volume\` : تغيير الصوت [vol] 
-\`${prefix}np\` : عرض مايتم تشغيله الان [np] 
-\`${prefix}repeat\` : تكرار الاغنية 
 
+\`${prefix}شغل\` : تشغيل الاغنية او اضافتها للقائمة او اكمال الاغنية [p]
+\`==================================================================\`
+\`${prefix}إيقاف مؤقت\` : ايقاف مؤقت الاغنية
+\`==================================================================\`
+\`${prefix}كمل\` : اكمال الاغنية 
+\`==================================================================\`
+\`${prefix}وقف\` : لأيقاف الأغنية وخروج البوت من الروم
+\`==================================================================\`
+\`${prefix}تخطى الكل\` : لتخطي الأغنية بشكل مباشر
+\`==================================================================\`
+\`${prefix}قائمة\` : عرض القائمة 
+\`==================================================================\`
+\`${prefix}اذهب الى\` : لتخطي الأغنية الى الأغنية القادمة في طابور الموسيقى القادمة
+\`==================================================================\`
+\`${prefix}تخطى\` : تخطي للاغنية التالية 
+\`==================================================================\`
+\`${prefix}صوت\` : تغيير الصوت [vol] 
+\`==================================================================\`
+\`${prefix}الان\` : عرض مايتم تشغيله الان [np] 
+\`==================================================================\`
+\`${prefix}تكرار\` : تكرار الاغنية 
+\`==================================================================\`
+
+\`__________________________________________________________________\`
 \`أوامر الحماية\` :closed_lock_with_key:
+
 \`${prefix}settings limitsban\` : تحدد العدد الي تبيه لو حد بند  البوت يبنده 
+\`==================================================================\`
 \`${prefix}settings limitskick\` : تحدد العدد الي تبيه لو حد طرد 3 او 4 البوت يبنده 
+\`==================================================================\`
 \`${prefix}settings limitsroleD\` : تحدد العدد الي تبيه لو حد مسح رول 3 او 4 البوت يبنده 
+\`==================================================================\`
 \`${prefix}settings limitsroleC\` : تحدد العدد الي تبيه لو حد صنع روم 3 او 4 البوت يبنده 
+\`==================================================================\`
 \`${prefix}settings limitschannelD\` : تحدد العدد الي تبيه لو حد مسح روم 3 او 4 البوت يبنده 
+\`==================================================================\`
 \`${prefix}settings limitstime\` : تحديد الوقت الذي من خلالة يتم التبنيد كـ مثال اذا شخص بند 5 في دقيقة البوت يبنده
+\`==================================================================\`
 \`${prefix}antibots on\` : منع دخول بوتات
+\`==================================================================\`
 \`${prefix}antibots off\` : السماح للبوتات بالدخول
-\`دسكورد صاحب البوت \` : <https://discord.gg/EeJsbMS>
+\`==================================================================\`
+
 `);
         })
         .then(e => {
@@ -834,47 +910,95 @@ client.on("message", message => {
       message.author
         .send(
           `   
+\`__________________________________________________________________\`
 \`الاوامر العامة\` :postbox:
+
 \`${prefix}bot\` : لعرض معلومات عن البوت 
+\`==================================================================\`
 \`${prefix}user\` : لعرض معلومات عنك 
+\`==================================================================\`
 \`${prefix}avt\` :يعرض لك صورت  اي شخص عن طريق الايدي
+\`==================================================================\`
 \`${prefix}avatar\` : لعرض صورتك أو صورة الي تمنشنه 
-\`${prefix}color\` : لأختيار لونك في السيرفر 
-\`${prefix}colors\` : غير لونك 
-\`${prefix}inf\` : عدد الدعوات للسيرفر
+\`==================================================================\`
+\`${prefix}لون\` : لأختيار لونك في السيرفر 
+\`==================================================================\`
+\`${prefix}الوان\` : غير لونك 
+\`==================================================================\`
+\`${prefix}انفايت\` : عدد الدعوات للسيرفر
+\`==================================================================\`
 \`${prefix}رابط\` : اكتب رابط بالشات يجيك رابط السيرفر خاص
+\`==================================================================\`
+\`${prefix}السيرفر\` :معلومات السيرفر
+\`=================================================================\`
+\`${prefix}البنق\` : لعرض البنق
+\`=================================================================\`
 
+\`__________________________________________________________________\`
 \`الاوامر الإدارية\` :stars:
-\`${prefix}clear\` : لمسح الشات 
-\`${prefix}ban\` : لحظر شخص من السيرفر
-\`${prefix}kick\` : لطرد شخص من السيرفر
+
+\`${prefix}مسح\` : لمسح الشات 
+\`==================================================================\`
+\`${prefix}باند\` : لحظر شخص من السيرفر
+\`==================================================================\`
+\`${prefix}طرد\` : لطرد شخص من السيرفر
+\`==================================================================\`
 \`${prefix}open\` : لفتح الشات
+\`==================================================================\`
 \`${prefix}close\` : لقفل الشات 
-\`${prefix}mute\` : لإسكات شخص
-\`${prefix}unmute\` : لـ فك إسكات شخص
-\`${prefix}new\` : فتح التكت
-\`${prefix}closet\` : لحذف روم التكت
+\`==================================================================\`
+\`${prefix}اسكات\` : لإسكات شخص
+\`==================================================================\`
+\`${prefix}تكلم\` : لـ فك إسكات شخص
+\`==================================================================\`
+\`${prefix}تكت\` : فتح التكت
+\`==================================================================\`
+\`${prefix}حذف تكت\` : لحذف روم التكت
+\`==================================================================\`
 \`${prefix}say\` : البوت يكرر كلامك
-\`${prefix}move\` : لسحب الشخص الى روومك
+\`==================================================================\`
+\`${prefix}سحب\` : لسحب الشخص الى روومك
+\`==================================================================\`
 \`${prefix}reply\` : لصنع رد تلقائي
+\`==================================================================\`
 \`${prefix}setLog\` : لتحديد روم السجلات 
+\`==================================================================\`
 \`${prefix}setby\` : تحديد روم المغادرة
+\`==================================================================\`
 \`${prefix}setWelcomer <channel name>\` : لتحديد روم الولكم 
+\`==================================================================\`
 \`${prefix}setMessage\` : لتحديد رسالة الترحيب 
+\`==================================================================\`
 \`${prefix}setVc\` <channel name> : لتحديد روم الفويس اونلاين 
+\`==================================================================\`
 \`${prefix}vc off\` : لإغلاق روم الفويس اونلاين
+\`==================================================================\`
 \`${prefix}ls\` : لإظهار جميع بوتات السيرفر
+\`==================================================================\`
 \`${prefix}role\` : لاعطاء شخص رتبة
+\`==================================================================\`
 \`${prefix}role all\` : لـ إعطاء الجميع رتبة معينة
+\`==================================================================\`
+\`${prefix}giveaway\` :قيفوي
+\`==================================================================\`
+\`${prefix}gcreate\` :
+\`==================================================================\`
 
+\`__________________________________________________________________\`
 \`\`اوامر التقديم\`\` :pencil: 
-\`${prefix}room1\` : لعمل روم التقديمات
-\`${prefix}room2\` : لعمل روم القبول والرفض
-\`${prefix}لقبول تقديم عضو : \`قبول
-مثال: \`\`${prefix}قبول @منشن عضو \`\`
- ${prefix}لرفض عضو : رفض
-مثال: \`\`${prefix}رفض @منشن عضو لست متفاعل بشكل كافِ\`\`
 
+\`${prefix}room1\` : لعمل روم التقديمات
+\`==================================================================\`
+\`${prefix}room2\` : لعمل روم القبول والرفض
+\`==================================================================\`
+\`${prefix}لقبول تقديم عضو : \`قبول
+\`==================================================================\`
+مثال: \`\`${prefix}قبول @منشن عضو \`\`
+\`==================================================================\`
+${prefix}لرفض عضو : رفض
+\`==================================================================\`
+مثال: \`\`${prefix}رفض @منشن عضو لست متفاعل بشكل كافِ\`\`
+\`==================================================================\`
 
 
   `
@@ -882,24 +1006,41 @@ client.on("message", message => {
         .then(() => {
           message.author.send(`
 
+\`__________________________________________________________________\`
 \`أوامر الكريدت\` :credit_card: 
-\`${prefix}credits\` : لمعرفة رصيدك  
-\`${prefix}daily\` : لأخذ جائزة يومية
-\`يمكن التحويل من شخص لشخص + يزيد الكريدت فقط من امر دايلي\`
 
+\`${prefix}credits\` : لمعرفة رصيدك  
+\`==================================================================\`
+\`${prefix}daily\` : لأخذ جائزة يومية
+\`==================================================================\`
+\`يمكن التحويل من شخص لشخص + يزيد الكريدت فقط من امر دايلي\`
+\`==================================================================\`
+
+\`__________________________________________________________________\`
 \`أوامر الموسيقى \` :notes:
-\`${prefix}Play\` : تشغيل الاغنية او اضافتها للقائمة او اكمال الاغنية [p]
-\`${prefix}Pause\` : ايقاف مؤقت الاغنية
-\`${prefix}Resume\` : اكمال الاغنية 
-\`${prefix}stop\` : لأيقاف الأغنية وخروج البوت من الروم
-\`${prefix}forceskip\` : لتخطي الأغنية بشكل مباشر
-\`${prefix}Queue\` : عرض القائمة 
-\`${prefix}skipto\` : لتخطي الأغنية الى الأغنية القادمة في طابور الموسيقى القادمة
-\`${prefix}Skip\` : تخطي للاغنية التالية 
-\`${prefix}Volume\` : تغيير الصوت [vol] 
-\`${prefix}np\` : عرض مايتم تشغيله الان [np] 
-\`${prefix}repeat\` : تكرار الاغنية 
-\`دسكورد صاحب البوت \` : <https://discord.gg/EeJsbMS>
+
+\`${prefix}شغل\` : تشغيل الاغنية او اضافتها للقائمة او اكمال الاغنية [p]
+\`==================================================================\`
+\`${prefix}ايقاف مؤقت\` : ايقاف مؤقت الاغنية
+\`==================================================================\`
+\`${prefix}كمل\` : اكمال الاغنية 
+\`==================================================================\`
+\`${prefix}وقف\` : لأيقاف الأغنية وخروج البوت من الروم
+\`==================================================================\`
+\`${prefix}تخطى الكل\` : لتخطي الأغنية بشكل مباشر
+\`==================================================================\`
+\`${prefix}قائمة\` : عرض القائمة 
+\`==================================================================\`
+\`${prefix}ااذهب الى\` : لتخطي الأغنية الى الأغنية القادمة في طابور الموسيقى القادمة
+\`==================================================================\`
+\`${prefix}تخطى\` : تخطي للاغنية التالية 
+\`==================================================================\`
+\`${prefix}صوت\` : تغيير الصوت [vol] 
+\`==================================================================\`
+\`${prefix}الان\` : عرض مايتم تشغيله الان [np] 
+\`==================================================================\`
+\`${prefix}تكرار\` : تكرار الاغنية 
+\`==================================================================\`
 
 `);
         })
@@ -1044,14 +1185,13 @@ client.on("message", async message => {
       });
   }
 });
-//all copyrighit for revenge https://github.com/Bowlingtoolkit
-
+//
 ///تعديل غير اساسي
-///تقدر الصورة الخلفية ، شوف الشرح الرابط فوق اول الكود
+///
 /// كود الوان
 client.on("message", message => {
   if (!message.guild || message.author.bot) return;
-  if (message.content == prefix + "colors") {
+  if (message.content == prefix + "الوان") {
     var fsn = require("fs-nextra");
     fs.readdir("./colors", async (err, files) => {
       var f = files[Math.floor(Math.random() * files.length)];
@@ -1119,13 +1259,13 @@ client.on("message", message => {
       return message.reply("**This Command Only For Servers**");
     if (!message.member.hasPermission("MANAGE_GUILD"))
       return message.channel.send(
-        "**غفوا ليس لديك صلاحية** `MANAGE_GUILD`"
+        "**Sorry But You Dont Have Permission** `MANAGE_GUILD`"
       );
-    if (!room) return message.channel.send("اسم الروم التي تريد انشاؤه");
+    if (!room) return message.channel.send("Please Type The Channel Name");
     if (!findroom)
-      return message.channel.send("اسم روم الوق التي تريد انشاؤه");
+      return message.channel.send("Please Type The Log Channel Name");
     let embed = new Discord.RichEmbed()
-      .setTitle("**تم تم إعداد روم الوق**")
+      .setTitle("**Done The Log Code Has Been Setup**")
       .addField("Channel:", `${room}`)
       .addField("Requested By:", `${message.author}`)
       .setThumbnail(message.author.avatarURL)
@@ -1147,7 +1287,7 @@ client.on("message", message => {
       return message.reply("**This Command Only For Servers**");
     if (!message.member.hasPermission("MANAGE_GUILD"))
       return message.channel.send(
-        "**غفوا ليس لديك صلاحية** `MANAGE_GUILD`"
+        "**Sorry But You Dont Have Permission** `MANAGE_GUILD`"
       );
     if (!log[message.guild.id])
       log[message.guild.id] = {
@@ -1605,7 +1745,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
         };
       if (log[oldMember.guild.id].onoff === "Off") return;
       let roleAdded = new Discord.RichEmbed()
-        .setTitle("**[إضافة رتبة إلى العضو]**")
+        .setTitle("**[ADDED ROLE TO MEMBER]**")
         .setThumbnail(oldMember.guild.iconURL)
         .setColor("GREEN")
         .setDescription(
@@ -1626,7 +1766,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
         };
       if (log[(oldMember, newMember.guild.id)].onoff === "Off") return;
       let roleRemoved = new Discord.RichEmbed()
-        .setTitle("**[تمت إزالة الرتبه من العضو]**")
+        .setTitle("**[REMOVED ROLE FROM MEMBER]**")
         .setThumbnail(oldMember.guild.iconURL)
         .setColor("RED")
         .setDescription(
@@ -1679,7 +1819,7 @@ client.on("voiceStateUpdate", (voiceOld, voiceNew) => {
 
     if (voiceOld.serverMute === false && voiceNew.serverMute === true) {
       let serverMutev = new Discord.RichEmbed()
-        .setTitle("**[كتم الصوت]**")
+        .setTitle("**[VOICE MUTE]**")
         .setThumbnail(
           "https://images-ext-1.discordapp.net/external/pWQaw076OHwVIFZyeFoLXvweo0T_fDz6U5C9RBlw_fQ/https/cdn.pg.sa/UosmjqDNgS.png"
         )
@@ -1699,7 +1839,7 @@ client.on("voiceStateUpdate", (voiceOld, voiceNew) => {
         };
       if (log[(voiceOld, voiceOld.guild.id)].onoff === "Off") return;
       let serverUnmutev = new Discord.RichEmbed()
-        .setTitle("**[إلغاء الصوت]**")
+        .setTitle("**[VOICE UNMUTE]**")
         .setThumbnail(
           "https://images-ext-1.discordapp.net/external/u2JNOTOc1IVJGEb1uCKRdQHXIj5-r8aHa3tSap6SjqM/https/cdn.pg.sa/Iy4t8H4T7n.png"
         )
@@ -1739,7 +1879,7 @@ client.on("voiceStateUpdate", (voiceOld, voiceNew) => {
         };
       if (log[(voiceOld, voiceOld.guild.id)].onoff === "Off") return;
       let serverUndeafv = new Discord.RichEmbed()
-        .setTitle("**[صوت UNDEAF]**")
+        .setTitle("**[VOICE UNDEAF]**")
         .setThumbnail(
           "https://images-ext-2.discordapp.net/external/s_abcfAlNdxl3uYVXnA2evSKBTpU6Ou3oimkejx3fiQ/https/cdn.pg.sa/i7fC8qnbRF.png"
         )
@@ -1765,7 +1905,7 @@ client.on("voiceStateUpdate", (voiceOld, voiceNew) => {
       };
     if (log[(voiceOld, voiceOld.guild.id)].onoff === "Off") return;
     let voiceLeave = new Discord.RichEmbed()
-      .setTitle("**[تم تغير روم الصوتي]**")
+      .setTitle("**[CHANGED VOICE ROOM]**")
       .setColor("GREEN")
       .setThumbnail(voiceOld.user.avatarURL)
       .setDescription(
@@ -1791,18 +1931,28 @@ client.on("message", message => {
     message.channel.sendFile("");
   }
 });
+
 client.on("message", message => {
-  if (message.content === "ip") {
-    message.channel.send("**:heart:garqeo or connect cfx.re/join/garqeo:heart:**");
+  if (message.content === "هاي") {
+    message.channel.send("**:heart:هايات:heart:**");
     message.channel.sendFile("");
   }
 });
+
+client.on("message", message => {
+  if (message.content === "مرحبا") {
+    message.channel.send("**:heart:مرحبتين:heart:**");
+    message.channel.sendFile("");
+  }
+});
+
+
 ////تعديل غير اساسي
 /// كود اختيار لون
 
 client.on("message", message => {
   let args = message.content.split(" ").slice(1);
-  if (message.content.split(" ")[0] == prefix + "color") {
+  if (message.content.split(" ")[0] == prefix + "لون") {
     const embedd = new Discord.RichEmbed()
       .setFooter(
         "Requested by " + message.author.username,
@@ -1813,7 +1963,7 @@ client.on("message", message => {
     if (!args[0]) return message.channel.sendEmbed(embedd);
     if (isNaN(args[0]))
       return message.channel.sendEmbed(
-        embedd.setDescription("الرجاء اختيار الرقم :x:")
+        embedd.setDescription("Please select a number :x:")
       );
     if (!message.guild.roles.find("name", `${args[0]}`))
       return message.channel.sendEmbed(embedd);
@@ -1822,12 +1972,12 @@ client.on("message", message => {
     if (!a) return;
     if (a.hasPermission(8))
       return message.channel.send(
-        embedd.setDescription("هذا الون عنده administrator!")
+        embedd.setDescription("This color has administrator!")
       );
     const embed = new Discord.RichEmbed()
 
       .setFooter(
-        "مطلوب من " + message.author.username,
+        "Requested by " + message.author.username,
         message.author.avatarURL
       )
       .setDescription(`**Color Changed To Successfully** :white_check_mark: `)
@@ -1867,7 +2017,7 @@ client.on("message", message => {
       return message.channel.send("**ليس لديك صلاحيات . ❌**");
     message.channel.send(
       `**${args}.  | :ballot_box_with_check: |لقد تم شغيل المغادرة هنا**`
-    ); //By ItzTexo
+    ); 
     client.on("guildMemberAdd", member => {
       if (member.user.bot) return;
       var embed = new Discord.RichEmbed()
@@ -1890,7 +2040,7 @@ client.on("message", message => {
 /////كود سرعة البوت او البينق
 client.on("message", message => {
   if (!message.channel.guild) return;
-  if (message.content.startsWith(prefix + "ping")) {
+  if (message.content.startsWith(prefix + "البنق")) {
     if (message.author.bot) return;
     if (!message.channel.guild) return;
     var Bping = `${Math.round(client.ping)}`;
@@ -2233,7 +2383,7 @@ client.on("roleCreate", async channel => {
     anti[channel.guild.id + entry.id].actions = Math.floor(
       anti[channel.guild.id + entry.id].actions + 1
     );
-    console.log("TEST");
+    console.log("TETS");
     setTimeout(() => {
       anti[channel.guild.id + entry.id].actions = "0";
     }, config[channel.guild.id].time * 1000);
@@ -2551,19 +2701,19 @@ client.on("message", async message => {
   if (message.content.startsWith(prefix + "gcreate")) {
     let embed1 = new Discord.RichEmbed()
       .setColor()
-      .setDescription("الإذن التالي مفقود `MANAGE_GUILD`");
+      .setDescription("Missing the following permission `MANAGE_GUILD`");
 
     let embed2 = new Discord.RichEmbed()
       .setColor()
-      .setDescription("يرجى إرسال اسم `الغرفة` دون ذكرها");
+      .setDescription("Please send the `room` name without mentioning it");
 
     let embed3 = new Discord.RichEmbed()
       .setColor()
-      .setDescription("اسم غرفة خاطئ");
+      .setDescription("Wrong room name");
 
     let embed4 = new Discord.RichEmbed()
       .setColor()
-      .setDescription("'يرجى إرسال 'الوقت");
+      .setDescription("Please send the `time`");
 
     let embed5 = new Discord.RichEmbed()
       .setColor()
@@ -2573,7 +2723,7 @@ client.on("message", async message => {
 
     let embed6 = new Discord.RichEmbed()
       .setColor()
-      .setDescription("من فضلك أرسل `gift`");
+      .setDescription("Please send the `gift`");
 
     if (!message.guild.member(message.author).hasPermission("MANAGE_GUILD"))
       return message.channel.send(embed1);
@@ -2648,9 +2798,9 @@ client.on("message", async message => {
                                   .setDescription(
                                     `Winners : no enough number of reaction so there is no winner`
                                   )
-                                  .setFooter("انتهى في :")
+                                  .setFooter("Ended at :")
                                   .setTimestamp();
-                                m.edit("** 🎉 انتهى السحب 🎉**", {
+                                m.edit("** 🎉 GIVEAWAY ENDED 🎉**", {
                                   embed: endEmbed
                                 });
                               } else {
@@ -2658,9 +2808,9 @@ client.on("message", async message => {
                                   .setColor()
                                   .setTitle(title)
                                   .setDescription(`Winners : ${gFilter}`)
-                                  .setFooter("انتهى في :")
+                                  .setFooter("Ended at :")
                                   .setTimestamp();
-                                m.edit("** 🎉 انتهى السحب 🎉**", {
+                                m.edit("** 🎉 GIVEAWAY ENDED 🎉**", {
                                   embed: endEmbed
                                 });
                               }
@@ -2704,7 +2854,7 @@ function saveReplay() {
 
 /////كود صنع رد تلقائي
 client.on("message", async message => {
-  if (message.content.startsWith(prefix + "reply")) {
+  if (message.content.startsWith(prefix + "الرد")) {
     if (message.author.bot || message.channel.type == "dm") return undefined;
     if (!message.member.hasPermission("ADMINISTRATOR")) return;
     if (!replyMSG[message.author.id])
@@ -2970,7 +3120,7 @@ client.on("guildMemberAdd", async member => {
     let result = await fetch(
       member.user.displayAvatarURL.replace(imageUrlRegex, "?size=128")
     );
-    if (!result.ok) throw new Error("فشل في الحصول على الصورة الرمزية!");
+    if (!result.ok) throw new Error("Failed to get the avatar!");
     let avatar = await result.buffer();
 
     let name =
@@ -3006,7 +3156,6 @@ client.on("guildMemberAdd", async member => {
       .setColor(nameColor)
       .addText(name, nameX, nameY)
       .toBuffer();
-
     const filename = `Baron-wlc-${member.id}.jpg`;
     const attachment = new Attachment(buffer, filename);
     await channel.send(attachment);
@@ -3050,7 +3199,7 @@ client.on("guildMemberAdd", async member => {
     const logChannel = member.guild.channels.find(
       channel => channel.name === `${welcome[member.guild.id].channel}`
     );
-    if (!logChannel) return console.log("لا أستطيع أن أجد ترحيب قناة");
+    if (!logChannel) return console.log("I can't find welcomeChannel");
     let gg1 = await welcome[member.guild.id].msg.replace(
       "[member]",
       `<@!${member.id}>`
@@ -3081,12 +3230,12 @@ client.on("message", async message => {
         return message.reply("**This Command Only For Servers**");
       if (!message.member.hasPermission("MANAGE_GUILD"))
         return message.channel.send(
-          "**آسف ولكن ليس لديك إذن** `MANAGE_GUILD`"
+          "**Sorry But You Dont Have Permission** `MANAGE_GUILD`"
         );
       if (!room) return message.channel.send("Please Type The Channel Name");
       if (!findroom) return message.channel.send("Cant Find This Channel");
       let embed = new Discord.RichEmbed()
-        .setTitle("**تم إعداد الترحيب**")
+        .setTitle("**Done The Welcome Has Been Setup**")
         .addField("Channel:", `${room}`)
         .addField("Requested By:", `${message.author}`)
         .addField(
@@ -3112,12 +3261,12 @@ client.on("message", async message => {
         return message.reply("**This Command Only For Servers**");
       if (!message.member.hasPermission("MANAGE_GUILD"))
         return message.channel.send(
-          "**آسف ولكن ليس لديك إذن** `MANAGE_GUILD`"
+          "**Sorry But You Dont Have Permission** `MANAGE_GUILD`"
         );
       if (!room) return message.channel.send("Please Type The Channel Name");
       if (!findroom) return message.channel.send("Cant Find This Channel");
       let embed = new Discord.RichEmbed()
-        .setTitle("**تم إعداد الترحيب**")
+        .setTitle("**Done The Welcome Has Been Setup**")
         .addField("Channel:", `${room}`)
         .addField("Requested By:", `${message.author}`)
         .addField("Default Message:", msg)
@@ -3149,14 +3298,14 @@ client.on("message", async message => {
     let thisFalse;
     let room = welcome[message.guild.id].channel;
     if (!message.member.hasPermission("MANAGE_GUILD"))
-      return message.channel.send("ليس لديك إذن").then(msg => {
+      return message.channel.send("You don't have permission").then(msg => {
         msg.delete(4500);
         message.delete(4500);
       });
 
     message.channel
       .send(
-        `**من فضلك اكتب رسالة الترحيب الان:
+        `**من فضلك اكتب رسالة الترحيب الان:امنور السيرفر يا بعد قلبي
 لعمل منشن للعضو او الشخص الذى قام بدعوتة
 Ex : 
 \`[member] Joined the server by [inviter]\`**`
@@ -3173,7 +3322,7 @@ Ex :
             thisMessage = collected.first().content;
             msg.edit("**تم الاعداد بنجاح**").then(msg => {
               let embed = new Discord.RichEmbed()
-                .setTitle("**تم الانتهاء من إعداد رسالة الترحيب**")
+                .setTitle("**Done The Welcome Msg Has Been Setup**")
                 .addField("Message:", `${thisMessage}`)
                 .setThumbnail(message.author.avatarURL)
                 .setFooter(`${client.user.username}`);
@@ -3255,7 +3404,7 @@ client.on("message", message => {
     let channelfind = message.guild.channels.find(c => c.name == channel);
     if (!channel)
       return message.channel.send(
-        "يرجى كتابة مثال اسم القناة الصوتية: " +
+        "Please Type The Voice Channel Name Example: " +
           `${prefix}setVc <Channel name>`
       );
     if (!channelfind)
@@ -3725,7 +3874,7 @@ client.on("message", async msg => {
 let cmds = {
   play: { cmd: "play", a: ["p", "شغل"] },
   skip: { cmd: "skip", a: ["s", "تخطى"] },
-  stop: { cmd: "stop", a: ["ايقاف"] },
+  stop: { cmd: "stop", a: ["وقف"] },
   pause: { cmd: "pause", a: ["ايقاف مؤقت"] },
   resume: { cmd: "resume", a: ["r", "كمل"] },
   volume: { cmd: "volume", a: ["vol", "صوت"] },
@@ -3828,7 +3977,7 @@ client.on("message", async msg => {
           var video = await youtube.getVideoByID(videos[0].id);
         } catch (err) {
           console.error(err);
-          return msg.channel.send("لا يمكنني العثور على أي شيء");
+          return msg.channel.send("I can't find any thing");
         }
       }
 
@@ -3893,7 +4042,7 @@ client.on("message", async msg => {
         serverQueue.songs.push(song);
 
         if (playlist) return undefined;
-        if (!args) return msg.channel.send("لا نتائج.");
+        if (!args) return msg.channel.send("no results.");
         else
           return msg.channel
             .send(":watch: Loading... [`" + args + "`]")
@@ -3958,14 +4107,14 @@ client.on("message", async msg => {
     let queue = active.get(msg.guild.id);
     if (queue.repeating)
       return msg.channel.send(
-        "وضع التكرار قيد التشغيل ، لا يمكنك إيقاف تشغيل الموسيقى أو تشغيلها`" +
+        "Repeating Mode is on, you can't stop the music, run `" +
           `${prefix}repeat` +
-          "` لإيقاف تشغيله."
+          "` to turn off it."
       );
     queue.songs = [];
     queue.connection.dispatcher.end();
     return msg.channel.send(
-      ":notes: توقف اللاعب وتم مسح قائمة الانتظار."
+      ":notes: The player has stopped and the queue has been cleared."
     );
   } else if (cmd === "skip") {
     let vCh = msg.member.voiceChannel;
@@ -3974,14 +4123,14 @@ client.on("message", async msg => {
 
     if (!vCh)
       return msg.channel.send(
-        "آسف ، لكن لا يمكنك ذلك لأنك لست في قناة صوتية"
+        "Sorry, but you can't because you are not in voice channel"
       );
 
-    if (!queue) return msg.channel.send("لا توجد موسيقى يتم تخطيها");
+    if (!queue) return msg.channel.send("No music playing to skip it");
 
     if (queue.repeating)
       return msg.channel.send(
-        "لا يمكنك تخطيه ، لأن وضع التكرار قيد التشغيل ، قم بالتشغيل" +
+        "You can't skip it, because repeating mode is on, run " +
           `\`${prefix}forceskip\``
       );
 
@@ -4021,22 +4170,22 @@ client.on("message", async msg => {
       return msg.channel.send(`You are not in my voice channel.`);
 
     if (!queue) {
-      return msg.channel.send("لا يتم تشغيل الموسيقى للتوقف مؤقتًا.");
+      return msg.channel.send("No music playing to pause.");
     }
 
     if (!queue.playing)
       return msg.channel.send(
-        ":no_entry_sign: يجب أن يكون هناك تشغيل الموسيقى لاستخدام ذلك!"
+        ":no_entry_sign: There must be music playing to use that!"
       );
 
     let disp = queue.connection.dispatcher;
 
-    disp.pause("توقف ..");
+    disp.pause("Pausing..");
 
     queue.playing = false;
 
     msg.channel.send(
-      ":notes: تم الإيقاف مؤقتًا " + args + ". **نوع** `" + prefix + "استئناف لإلغاء الإيقاف المؤقت!"
+      ":notes: Paused " + args + ". **Type** `" + prefix + "resume` to unpause!"
     );
   } else if (cmd === "resume") {
     let queue = active.get(msg.guild.id);
@@ -4046,30 +4195,30 @@ client.on("message", async msg => {
     if (!vCh || vCh !== msg.guild.me.voiceChannel)
       return msg.channel.send(`You are not in my voice channel.`);
 
-    if (!queue) return msg.channel.send(":notes: لم يتم إيقاف الموسيقى مؤقتًا لاستئنافها.");
+    if (!queue) return msg.channel.send(":notes: No music paused to resume.");
 
     if (queue.playing)
-      return msg.channel.send(":notes: لم يتم إيقاف الموسيقى مؤقتًا لاستئنافها.");
+      return msg.channel.send(":notes: No music paused to resume.");
 
     let disp = queue.connection.dispatcher;
 
-    disp.resume("جارٍ الاستئناف ..");
+    disp.resume("Resuming..");
 
     queue.playing = true;
 
-    msg.channel.send(":notes: جارٍ الاستئناف .");
+    msg.channel.send(":notes: Resumed.");
   } else if (cmd === "volume") {
     let queue = active.get(msg.guild.id);
 
     if (!queue || !queue.songs)
       return msg.channel.send(
-        ":notes: لا توجد موسيقى قيد التشغيل لضبط مستوى الصوت."
+        ":notes: There is no music playing to set volume."
       );
 
     let vCh = msg.member.voiceChannel;
 
     if (!vCh || vCh !== msg.guild.me.voiceChannel)
-      return msg.channel.send(":notes: أنت لست في قناة صوتي");
+      return msg.channel.send(":notes: You are not in my voice channel");
 
     let disp = queue.connection.dispatcher;
 
